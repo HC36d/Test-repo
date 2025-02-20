@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgiveness Request</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #ffdde1, #fc6076);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+        }
+        .audio-box {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 25px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
+        }
+        audio {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .message {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 600;
+            display: none;
+        }
+        p {
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: 500;
+            color: #444;
+        }
+        .disclaimer {
+            font-size: 14px;
+            margin-top: 15px;
+            font-style: italic;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="font-size: 28px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);">I'm Truly Sorry</h2>
+        <div class="messages">
+            <p class="message">Please listen to this message from my heart.</p>
+            <p class="message">I never meant to hurt you.</p>
+            <p class="message">I deeply regret my mistakes.</p>
+            <p class="message">You mean a lot to me.</p>
+            <p class="message">I value our relationship.</p>
+            <p class="message">Please find it in your heart to forgive me.</p>
+            <p class="message">I will do better.</p>
+            <p class="message">I am truly sorry from the bottom of my heart.</p>
+            <p class="message">Your forgiveness means everything.</p>
+            <p class="message">I hope to make things right.</p>
+        </div>
+        <div class="audio-box">
+            <audio controls id="audio">
+                <source src="voice-note.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <p class="disclaimer">Disclaimer: This message is intended to convey a heartfelt apology and sincerity. Forgiveness is a personal choice, and it is important to respect the feelings of others in the process.</p>
+        <p>
+            I know that words alone cannot undo what has been done, but please know that my apology is sincere. I regret my actions deeply and hope for your understanding and forgiveness. I promise to make amends and ensure that this never happens again.
+        </p>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const messages = document.querySelectorAll(".message");
+            let index = 0;
+
+            function showNextMessage() {
+                if (index > 0) {
+                    messages[index - 1].style.display = "none";
+                }
+                if (index < messages.length) {
+                    messages[index].style.display = "block";
+                    index++;
+                    setTimeout(showNextMessage, 3000);
+                }
+            }
+
+            document.getElementById("audio").addEventListener("play", function() {
+                showNextMessage();
+            });
+        });
+    </script>
+</body>
+</html>
