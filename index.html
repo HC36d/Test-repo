@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forgive Me</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #E6DAF4, #F5D9D9);
+      color: #333;
+      font-family: 'Dancing Script', cursive;
+      flex-direction: column;
+      overflow: hidden;
+      margin: 0;
+      position: relative;
+    }
+
+    .text-container {
+      font-size: 4rem;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .balloon {
+      position: absolute;
+      animation: float 8s ease-in-out infinite;
+      width: 80px;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100%); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-150%); opacity: 0; }
+    }
+
+    .scroll-text {
+      font-size: 2rem;
+      text-align: center;
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      margin-bottom: 30px;
+      display: none;
+      animation: scrollCredits 10s linear forwards;
+    }
+
+    @keyframes scrollCredits {
+      0% {
+        transform: translateY(100%);
+        opacity: 1;
+      }
+      20% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      80% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+    }
+
+    .scroll-image-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      animation: fadeInUp 10s ease-in-out forwards;
+      position: relative;
+      width: 80%;
+      margin-top: 50px;
+    }
+
+    .scroll-image {
+      width: 100%;
+      height: auto;
+      opacity: 0;
+      animation: fadeIn 5s ease-in-out forwards;
+      animation-delay: 6s;
+    }
+
+    .image-description {
+      font-size: 1.5rem;
+      margin-top: 20px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 3s ease-in-out forwards;
+      animation-delay: 6s;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .scroll-image-container.hidden {
+      display: none;
+    }
+
+    .final-message {
+      font-size: 2rem;
+      text-align: center;
+      margin-top: 50px;
+      opacity: 0;
+      animation: scrollUp 15s ease-in-out forwards;
+      max-width: 80%;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      padding: 0 10px;
+      color: #ff6347; /* Change text color for visibility */
+      background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+      border-radius: 15px; /* Rounded corners */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    }
+
+    @keyframes scrollUp {
+      0% { transform: translateY(100%); opacity: 1; }
+      100% { transform: translateY(-100%); opacity: 0; }
+    }
+
+    .buttons-container {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      visibility: hidden; /* Hide buttons initially */
+    }
+
+    .button {
+      padding: 20px 40px;
+      font-size: 1.5rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+      opacity: 0.7;
+    }
+
+    .button:hover {
+      transform: scale(1.1);
+    }
+
+    .forgiveness-message {
+      font-size: 2rem;
+      color: #28a745;
+      margin-top: 20px;
+      display: none;
+      text-align: center;
+    }
+
+    /* Media queries for responsiveness */
+    @media screen and (max-width: 768px) {
+      .final-message {
+        font-size: 1.5rem;
+        max-width: 90%;
+        padding: 0 10px;
+      }
+
+      .button {
+        font-size: 1.2rem;
+        padding: 15px 30px;
+      }
+
+      .buttons-container {
+        flex-direction: column;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .final-message {
+        font-size: 1.2rem;
+        max-width: 95%;
+        padding: 0 10px;
+      }
+
+      .button {
+        font-size: 1rem;
+        padding: 12px 25px;
+      }
+
+      .buttons-container {
+        flex-direction: column;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <audio id="backgroundMusic" loop>
+    <source src="Forgive.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="text-container" id="text"></div>
+
+  <img src="1.svg" class="balloon" style="left: 10%; animation-delay: 0s;" />
+  <img src="2.svg" class="balloon" style="left: 25%; animation-delay: 2s;" />
+  <img src="1.svg" class="balloon" style="left: 50%; animation-delay: 4s;" />
+  <img src="2.svg" class="balloon" style="left: 75%; animation-delay: 6s;" />
+  <img src="1.svg" class="balloon" style="left: 35%; animation-delay: 8s;" />
+  <img src="2.svg" class="balloon" style="left: 60%; animation-delay: 10s;" />
+
+  <div class="scroll-text" id="scrollText1">
+    <div class="title" id="title1"></div>
+    <div class="description" id="desc1"></div>
+  </div>
+  <div class="scroll-text" id="scrollText2">
+    <div class="title" id="title2"></div>
+    <div class="description" id="desc2"></div>
+  </div>
+  <div class="scroll-text" id="scrollText3">
+    <div class="title" id="title3"></div>
+    <div class="description" id="desc3"></div>
+  </div>
+
+  <div class="scroll-image-container hidden" id="image1">
+    <img src="image1.jpg" class="scroll-image" />
+    <div class="image-description" id="descImage1">You are my life, I can't betray you.</div>
+  </div>
+
+  <div class="scroll-image-container hidden" id="image2">
+    <img src="image2.jpg" class="scroll-image" />
+    <div class="image-description" id="descImage2">I know I'm a fool, I did things I shouldn't.</div>
+  </div>
+
+  <div class="scroll-image-container hidden" id="image3">
+    <img src="image3.jpg" class="scroll-image" />
+    <div class="image-description" id="descImage3">But all of that is for you. Without you, I wouldn't want to live.</div>
+  </div>
+
+  <div class="final-message" id="finalMessage"></div>
+
+  <div class="buttons-container" id="buttonsContainer">
+    <div class="title" id="questionTitle">Will you forgive this fool?</div>
+    <button class="button" id="noButton" onclick="handleNoClick()" disabled>No</button>
+    <button class="button" id="yesButton" onclick="handleYesClick()" disabled>Yes</button>
+  </div>
+
+  <div class="forgiveness-message" id="forgivenessMessage">Thank you for forgiving me. Your love means the world to me.</div>
+
+  <script>
+    const texts = [
+      "Hey My Love",
+      "I Know I Broke Your Heart",
+      "Sorry Please Forgive Me",
+      "I Know I Have To Tell You",
+      "But I'm Afraid That I Lost",
+      "I Am So Sorry for Hurting You",
+      "You Are My Everything, My Soul, My Heart"
+    ];
+    let index = 0;
+    const textElement = document.getElementById('text');
+    const audio = document.getElementById('backgroundMusic');
+
+    document.body.addEventListener('click', () => {
+      audio.play();
+    });
+
+    function showText() {
+      textElement.style.opacity = 0;
+      setTimeout(() => {
+        textElement.textContent = texts[index];
+        textElement.style.opacity = 1;
+        index++;
+      }, 1000);
+    }
+
+    const intervalId = setInterval(() => {
+      if (index < texts.length) {
+        showText();
+      } else {
+        clearInterval(intervalId);
+        setTimeout(fadeOutText, 1000);
+      }
+    }, 4000);
+
+    function fadeOutText() {
+      textElement.style.opacity = 0;
+      setTimeout(showScrollTexts, 1000);
+    }
+
+    function showScrollTexts() {
+      const titles = ["Forgiveness", "Regret", "Hope"];
+      const descriptions = [
+        "A heartfelt plea for another chance.",
+        "Understanding the hurt caused and regret.",
+        "Holding on to the belief that reconciliation is possible."
+      ];
+
+      const slides = [
+        document.getElementById('scrollText1'),
+        document.getElementById('scrollText2'),
+        document.getElementById('scrollText3')
+      ];
+
+      const titleElements = [
+        document.getElementById('title1'),
+        document.getElementById('title2'),
+        document.getElementById('title3')
+      ];
+
+      const descriptionElements = [
+        document.getElementById('desc1'),
+        document.getElementById('desc2'),
+        document.getElementById('desc3')
+      ];
+
+      for (let i = 0; i < titles.length; i++) {
+        titleElements[i].textContent = titles[i];
+        descriptionElements[i].textContent = descriptions[i];
+      }
+
+      let currentSlide = 0;
+
+      function animateSlide() {
+        const slide = slides[currentSlide];
+        slide.style.display = "block";
+        slide.style.animation = `scrollCredits 10s linear forwards`;
+
+        slide.addEventListener('animationend', () => {
+          slide.style.display = "none";
+          currentSlide++;
+
+          if (currentSlide < slides.length) {
+            animateSlide();
+          } else {
+            setTimeout(showImages, 1000);
+          }
+        });
+      }
+
+      animateSlide();
+    }
+
+    let currentImageIndex = 0;
+    const imageContainers = [
+      document.getElementById('image1'),
+      document.getElementById('image2'),
+      document.getElementById('image3')
+    ];
+
+    const imageDescriptions = [
+      "You are my life, I can't betray you.",
+      "I know I'm a fool, I did things I shouldn't.",
+      "But all of that is for you. Without you, I wouldn't want to live."
+    ];
+
+    function showImages() {
+      const currentImage = imageContainers[currentImageIndex];
+      const description = currentImage.querySelector('.image-description');
+      currentImage.classList.remove('hidden');
+      currentImage.style.animation = `fadeInUp 10s ease-in-out forwards`;
+
+      description.textContent = imageDescriptions[currentImageIndex];
+      description.style.animation = `fadeIn 5s ease-in-out forwards`;
+
+      setTimeout(() => {
+        currentImage.classList.add('hidden');
+        currentImageIndex++;
+
+        if (currentImageIndex < imageContainers.length) {
+          showImages();
+        } else {
+          setTimeout(showFinalMessage, 1000);
+        }
+      }, 10000);
+    }
+
+    function showFinalMessage() {
+      const finalMessage = document.getElementById('finalMessage');
+      finalMessage.textContent = "I am sorry from the depth of my soul. I never meant to hurt you. Please find it in your heart to forgive me. I love you more than words can express, and I promise to never make the same mistake again. You're my everything, and I will be forever sorry for the pain I've caused.";
+      
+      finalMessage.style.transition = "opacity 4s ease-in-out";
+      finalMessage.style.opacity = 1;
+      
+      setTimeout(showButtons, 4000); // Show buttons after the final message appears
+    }
+
+    function showButtons() {
+      const buttonsContainer = document.getElementById('buttonsContainer');
+      buttonsContainer.style.opacity = 1;
+      buttonsContainer.style.visibility = "visible"; // Make the buttons visible
+      
+      // Enable buttons
+      document.getElementById('noButton').disabled = false;
+      document.getElementById('yesButton').disabled = false;
+    }
+
+    function handleNoClick() {
+      const noButton = document.getElementById('noButton');
+      const yesButton = document.getElementById('yesButton');
+      noButton.style.transform = "scale(0.7)";
+      yesButton.style.transform = "scale(1.2)";
+    }
+
+    function handleYesClick() {
+      const yesButton = document.getElementById('yesButton');
+      yesButton.style.transform = "scale(1.2)";
+      window.location.href = "Some.html";
+    }
+  </script>
+
+</body>
+</html>
